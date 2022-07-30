@@ -55,15 +55,4 @@ public class CustomerController {
   public void deleteCustomer(@PathVariable("customerId") UUID customerId) {
     customerService.deleteCustomerById(customerId);
   }
-
-  @ExceptionHandler(ConstraintViolationException.class)
-  public ResponseEntity<List<String>> validateErrorHandler(ConstraintViolationException exception) {
-    List<String> errors = new ArrayList<>(exception.getConstraintViolations().size());
-
-    exception.getConstraintViolations().forEach(constraintViolation -> {
-      errors.add(constraintViolation.getPropertyPath() + " : " + constraintViolation.getMessage());
-    });
-
-    return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-  }
 }
